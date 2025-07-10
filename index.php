@@ -32,7 +32,7 @@
                 <div class="table-2">
                     <div class="card">
                         <div class="card-header">
-                            <p>Todo Menu</p>
+                            <p class="glow-title">Todo Menu</p>
                         </div>
                         <div class="card-body">
                             <form method="post"
@@ -79,9 +79,9 @@
                                                         <h5>' . $i . ')   ' . $name . ' ' . $badge . '</h5>
                                                     </div>
                                                     <div class="task-actions">
-                                                        <a href="?action=done&item=' . $r['id'] . '" class="done-icon">✅</a>
-                                                        <button class="edit-icon" data-id="' . $r['id'] . '" data-name="' . $r['name'] . '" data-priority="' . $r['priority'] . '">📝</button>
-                                                        <a href="?action=delete&item=' . $r['id'] . '" class="delete-icon">🗑️</a>
+                                                        <a href="?action=done&item=' . $r['id'] . '" class="done-icon"> ✅ </a>
+                                                        <button class="edit-icon" data-id="' . $r['id'] . '" data-name="' . $r['name'] . '" data-priority="' . $r['priority'] . '"> 📝 </button>
+                                                        <a href="?action=delete&item=' . $r['id'] . '" class="delete-icon"> 🗑️ </a>
                                                     </div>
                                                 </div>
                                                 ';
@@ -97,11 +97,20 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <p class="tagline">Built with ❤️ using HTML, CSS, JS,PHP and MySQL</p>
+                            <p class="tagline">✅ Great things are done by a series of small tasks ✍️🧠💡🚀</p>
                         </div>
+
 
                     </div>
                 </div>
+            </div>
+            <div class="container-footer">
+                <p class="usage-guide">
+                <strong>Todo Tips💡:</strong> 
+                    | Mark Done ✅ | 
+                      Edit 📝 |
+                     Delete 🗑️ | 
+                </p>
             </div>
         </div>
     </main>
@@ -120,6 +129,9 @@
                 <input type="submit" value="Update Task" class="btn btn-primary">
             </form>
         </div>
+    </div>
+    <div class="page-footer">
+        <p class="tagline">Developed with ❤️ using HTML5 🧱 CSS3 ✨ JavaScript ⚙️ PHP 🛢️ MySQL</p>
     </div>
     <audio id="addSound" src="assets/addSound.mp3" preload="auto"></audio>
     <audio id="doneSound" src="assets/doneSound.mp3" preload="auto"></audio>

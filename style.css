@@ -11,6 +11,8 @@ body {
     linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
   background-size: 40px 40px;
   background-attachment: fixed;
+  background-position: 0 0;
+  animation: moveGrid 30s linear infinite; 
   min-height: 100vh;
   color: #fff;
   display: flex;
@@ -19,6 +21,7 @@ body {
   padding: 2rem;
   transition: background 0.6s ease, color 0.6s ease;
 }
+
 body::after {
   content: '';
   position: fixed;
@@ -31,6 +34,11 @@ body::after {
   z-index: -1;
 }
 
+body:not(.light-mode) img[src*="folder.png"] {
+  filter: invert(1) brightness(1.8) grayscale(1);
+  opacity: 0.8;
+}
+
 img {
   margin-top: 2rem;
   filter: grayscale(1);
@@ -38,11 +46,14 @@ img {
 }
 
 .container {
-  max-width: 720px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 2rem 2rem;
-  z-index: 2;
+  width: 90%;
+  max-width: 600px;
+  margin: auto;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 .table-2 {
   display: flex;
@@ -67,6 +78,35 @@ img {
   text-align: center;
   margin-bottom: 1rem;
   color: #f9f9f9;
+}
+
+.glow-title {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-family: 'Segoe UI', 'Outfit', sans-serif;
+  color: #7f5af0;
+  text-align: center;
+  text-shadow:
+    0 0 5px #7f5af0,
+    0 0 10px #7f5af0,
+    0 0 20px #a78bfa;
+  animation: glowTitlePulse 3s ease-in-out infinite;
+}
+
+@keyframes glowTitlePulse {
+  0%, 100% {
+    text-shadow:
+      0 0 5px #7f5af0,
+      0 0 10px #7f5af0,
+      0 0 20px #a78bfa;
+  }
+  50% {
+    text-shadow:
+      0 0 10px #9f7aea,
+      0 0 20px #b794f4,
+      0 0 30px #d6bcfa;
+  }
 }
 
 .card-body form {
@@ -127,11 +167,14 @@ img {
   color:  #aaa;
   border: none;
   outline: none;
-  appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg fill='%23ffffff' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right;
+  background-position: right 1rem center;
   background-size: 1rem;
+  appearance: none;           
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 2.5rem;     
 }
 
 .priority-dropdown:focus{
@@ -147,6 +190,41 @@ img {
 }
 .row.mt-2:hover {
   transform: scale(1.01);
+}
+
+.container-footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 1rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  color: #ccc;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.container-footer .usage-guide strong {
+  color: #fff;
+  text-shadow: 0 0 5px #7f5af0;
+}
+
+.page-footer {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  padding: 0.6rem 1.2rem;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  color: #fff;
+  box-shadow: 0 0 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+  text-align: center;
+  transition: background 0.3s ease;
 }
 
 /* Buttons */
@@ -266,7 +344,7 @@ img {
 .alert-update {
   background-color: #fff3cd;
   color: #856404;
-  border-left: 5px solid #ffc107; /* amber */
+  border-left: 5px solid #ffc107; 
 }
 
 .alert-danger {
@@ -348,16 +426,24 @@ img {
 
 /* Dark/Light Mode */
 body.light-mode {
-    background-color: #ffffff;
-    background-image:
+  background-color: #ffffff;
+  background-image: 
     linear-gradient(rgba(0,0,0,0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0,0,0,0.035) 1px, transparent 1px);
-    background-size: 40px 40px;
-    background-attachment: fixed;
-    color: #111;
-    position: relative;
-    transition: background 0.6s ease, color 0.6s ease;
+  background-size: 40px 40px;
+  background-attachment: fixed;
+  background-position: 0 0;
+  animation: moveGrid 30s linear infinite;
+  color: #111;
+  transition: background 0.6s ease, color 0.6s ease;
 }
+
+body.light-mode .page-footer {
+  background: #fff;
+  border: 1px solid #ccc;
+  color: #000;
+}
+
 
 body.light-mode::before {
   content: '';
@@ -396,6 +482,16 @@ body.light-mode .card-header p {
   color: #000000;
 }
 
+body.light-mode .container-footer {
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #222;
+}
+
+body.light-mode .container-footer .usage-guide strong {
+  color: #000;
+  text-shadow: none;
+}
 body.light-mode .badge.low { background-color: #3498db; }
 body.light-mode .badge.medium { background-color: #f39c12; }
 body.light-mode .badge.high { background-color: #e74c3c; }
@@ -439,6 +535,25 @@ body.light-mode .toggle-mode {
 body.light-mode .toggle-mode label {
   color: black;
 }
+
+body.light-mode .glow-title {
+  color: #5a36c8;
+  text-shadow:
+    0 0 3px #5a36c8,
+    0 0 6px #bbaaff;
+}
+
+body.light-mode .priority-dropdown {
+  background-image: url("data:image/svg+xml,%3Csvg fill='%23000000' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1rem;
+  appearance: none;           
+  -webkit-appearance: none;   
+  -moz-appearance: none;      
+  padding-right: 3 rem;      
+}
+
 #modeIcon {
   display: inline-block;
   transition: transform 0.4s ease, opacity 0.4s ease;
@@ -483,8 +598,22 @@ body.light-mode .toggle-mode label {
 
 @media screen and (max-width: 768px) {
   .container {
-    max-width: 95%;
     padding: 1.5rem;
+    width: 95%;
+  }
+
+  .task-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .task-buttons button {
+    flex: 1 1 30%;
+    min-width: 80px;
+    padding: 8px;
+    font-size: 14px;
   }
 
   .card {
@@ -501,6 +630,15 @@ body.light-mode .toggle-mode label {
     text-align: center;
     gap: 12px;
     padding: 1rem;
+  }
+
+  .row.mt-2 h5 {
+    font-size: 1.15rem;
+  }
+
+  .toggle-mode label {
+    font-size: 1.6rem;
+    padding: 10px 20px;
   }
 
   .task-actions {

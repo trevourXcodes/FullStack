@@ -1,22 +1,33 @@
 $(document).ready(function () {
-  // 🌙 Theme Toggle with Icon Animation
-  $("#themeToggle").change(function () {
-    const icon = $("#modeIcon");
-    icon.addClass("fade-out");
 
-    setTimeout(() => {
-      $("body").toggleClass("light-mode");
-      const isLight = $("body").hasClass("light-mode");
-      icon.text(isLight ? "☀️" : "🌙");
-      icon.removeClass("fade-out").addClass("fade-in");
+  // Check localStorage for theme
+    if (localStorage.getItem('theme') === 'light') {
+        $('body').addClass('light-mode');
+        $('#themeToggle').prop('checked', true);
+        $('#modeIcon').text('☀️');
+    }
 
-      setTimeout(() => {
-        icon.removeClass("fade-in");
-      }, 400);
-    }, 200);
-  });
+    // Toggle theme
+    $('#themeToggle').change(function () {
+        $('body').toggleClass('light-mode');
+        const isLight = $('body').hasClass('light-mode');
+        $('#modeIcon')
+            .removeClass('fade-in fade-out')
+            .addClass('fade-out');
+        
+        setTimeout(() => {
+            $('#modeIcon')
+                .text(isLight ? '☀️' : '🌙')
+                .removeClass('fade-out')
+                .addClass('fade-in');
+        }, 250);
 
-  // ✏️ Open Edit Modal
+        // Save preference
+        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    });
+
+
+  // ✏️ Edit modal
   $(".edit-icon").click(function () {
     $("#edit_id").val($(this).data("id"));
     $("#edit_name").val($(this).data("name"));
@@ -24,7 +35,6 @@ $(document).ready(function () {
     $("#editModal").fadeIn();
   });
 
-  // ❌ Close Modal
   $("#editModal").click(function (e) {
     if (e.target.id === "editModal") $(this).fadeOut();
   });
@@ -33,13 +43,12 @@ $(document).ready(function () {
     $("#editModal").fadeOut();
   });
 
-  // 🎧 Sound Effects
+  // 🔉 Sound Effects
   const addSound = document.getElementById("addSound");
   const doneSound = document.getElementById("doneSound");
   const updateSound = document.getElementById("updateSound");
   const deleteSound = document.getElementById("deleteSound");
 
-  // ➕ Add Item with Sound
   $("form").on("submit", function (e) {
     if ($(this).attr("id") !== "editForm") {
       e.preventDefault();
@@ -48,11 +57,10 @@ $(document).ready(function () {
       addSound.play();
       setTimeout(() => {
         form.submit();
-      }, 800); // Adjust based on your sound length
+      }, 800);
     }
   });
 
-  // ✅ Done Sound then Redirect
   $("a[href*='action=done']").on("click", function (e) {
     e.preventDefault();
     const url = $(this).attr("href");
@@ -63,7 +71,6 @@ $(document).ready(function () {
     }, { once: true });
   });
 
-  // 🗑️ Delete Sound then Redirect
   $("a[href*='action=delete']").on("click", function (e) {
     e.preventDefault();
     const url = $(this).attr("href");
@@ -74,7 +81,6 @@ $(document).ready(function () {
     }, { once: true });
   });
 
-  // ✏️ Update Task with Sound
   $("#editForm").on("submit", function (e) {
     e.preventDefault();
     const form = this;
@@ -82,10 +88,10 @@ $(document).ready(function () {
     updateSound.play();
     setTimeout(() => {
       form.submit();
-    }, 800); // Adjust based on update sound duration
+    }, 800);
   });
 
-  // 🔔 Fade out alerts
+  // ⏳ Auto-hide alert
   setTimeout(() => {
     $(".alert").fadeOut(500);
   }, 3000);
